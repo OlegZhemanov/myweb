@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infrastructure Visualization</title>
+    <style>
+        :root {
+            --primary-color: #76b869;
+            --secondary-color: #4abd32;
+            --accent-color: #00b4d8;
+            --background-color: #ffffff;
+            --surface-color: #f8f9fa;
+            --text-color: #2c3e50;
+            --text-light: #6c757d;
+            --border-color: #e9ecef;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode {
+            --primary-color: #76b869;
+            --secondary-color: #4abd32;
+            --accent-color: #00e5ff;
+            --background-color: #1a1a1a;
+            --surface-color: #2d2d2d;
+            --text-color: #ffffff;
+            --text-light: #a0a0a0;
+            --border-color: #404040;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            transition: all 0.3s ease;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.375rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .visualization-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            text-align: center;
+        }
+
+        .infrastructure-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px var(--shadow-color);
+            margin-bottom: 2rem;
+        }
+
+        .description {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 1rem;
+            background-color: var(--surface-color);
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+
+        .description h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .description p {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--surface-color);
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-button">← Back to Portfolio</a>
+    <button class="theme-toggle" onclick="toggleDarkMode()">🌙</button>
+
+    <div class="container">
+        <div class="visualization-container">
+            <img src="https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/cicd.jpg" alt="Infrastructure Diagram" class="infrastructure-image">
+            <div class="description">
+                <h2>Infrastructure Overview</h2>
+                <p>This diagram illustrates the cloud infrastructure architecture implemented during my tenure at SberBank. The system is built on SberCloud with Kubernetes at its core, featuring:</p>
+                <ul style="text-align: left; margin-left: 1rem;">
+                    <li>Multi-region deployment for high availability</li>
+                    <li>Service mesh implementation using Istio</li>
+                    <li>Automated CI/CD pipelines with Jenkins</li>
+                    <li>Infrastructure as Code using Terraform and Ansible</li>
+                    <li>Centralized monitoring with Prometheus and Grafana</li>
+                    <li>Secure secrets management via HashiCorp Vault</li>
+                </ul>
+                <p>The architecture supports 150+ anti-fraud applications with a 99.9999% SLA, handling 200+ annual releases through automated deployment processes.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const themeToggle = document.querySelector('.theme-toggle');
+            themeToggle.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        }
+    </script>
+</body>
+</html> 

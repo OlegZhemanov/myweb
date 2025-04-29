@@ -75,6 +75,7 @@
         .nav-links {
             display: flex;
             gap: 2rem;
+            margin-top: 15px;
         }
         
         .nav-links a {
@@ -156,6 +157,10 @@
         .hero-content {
             max-width: 600px;
         }
+
+        .about-content {
+            max-width: 100%;
+        }
         
         h1 {
             font-size: 3rem;
@@ -200,7 +205,7 @@
             margin-top: 2rem;
         }
         
-        .skill-category {
+        .skill-card {
             background-color: var(--surface-color);
             padding: 1.5rem;
             border-radius: 0.5rem;
@@ -208,7 +213,14 @@
             transition: transform 0.3s ease;
         }
 
-        .skill-category:hover {
+        .job-dates {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+            font-style: italic;
+        }
+
+        .skill-card:hover {
             transform: translateY(-5px);
         }
         
@@ -426,7 +438,10 @@
             <div class="logo">OZ</div>
             <div class="nav-links">
                 <a href="#about">About</a>
+                <a href="#expertise">Expertise</a>
                 <a href="#skills">Skills</a>
+                <a href="#tools">Tools</a>
+                <a href="#projects">Projects</a>
                 <a href="#contact">Contact</a>
                 <button class="theme-toggle" onclick="toggleDarkMode()">🌙</button>
             </div>
@@ -438,7 +453,10 @@
         </nav>
         <div class="mobile-menu" id="mobileMenu">
             <a href="#about" onclick="closeMobileMenu()">About</a>
+            <a href="#expertise" onclick="closeMobileMenu()">Expertise</a>
             <a href="#skills" onclick="closeMobileMenu()">Skills</a>
+            <a href="#tools" onclick="closeMobileMenu()">Tools</a>
+            <a href="#projects" onclick="closeMobileMenu()">Projects</a>
             <a href="#contact" onclick="closeMobileMenu()">Contact</a>
         </div>
     </header>
@@ -447,15 +465,42 @@
         <div class="container">
             <div class="hero-content">
                 <h1>Oleg Zhemanov</h1>
-                <p>Site Reliability Engineer with 3 years of expertise in building and managing scalable microservices using Kubernetes, and over 8 years in the IT industry.</p>
+                <p>DevOps Alchemist – Turning Code into Gold.</p>
                 <a href="#contact" class="btn">Get in Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="hero">
+        <div class="container">
+            <div class="about-content">
+                <h2>About</h1>
+                <p>DevOps Engineer with 3+ years of experience in Kubernetes and cloud infrastructure, and 8+ years in IT. Proficient in CI/CD pipelines, Infrastructure as Code (IaC), and service mesh tools. Expertise in autoscaling, disaster recovery, and security. Focused on building reliable, high-performance systems through automation and continuous improvement.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="expertise" class="skills">
+        <div class="container">
+            <h2>Expertise</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>SberBank</h3>
+                    <p class="job-dates">May 2023 - October 2024</p>
+                    <p>Ensured high availability (99.9999% SLA) for 150+ anti-fraud applications, managing 200+ annual releases. Automated infrastructure on SberCloud using Terraform, Ansible, and Kubernetes, with standardized Helm charts for consistent deployments. Enhanced security with HashiCorp Vault and Istio, while streamlining CI/CD pipelines via Jenkins for efficient releases.</p>
+                </div>
+                <div class="skill-card">
+                    <h3>ZUZEX</h3>
+                    <p class="job-dates">March 2022 - March 2023</p>
+                    <p>Managed AWS cloud services and bare-metal Kubernetes clusters using Terraform and Ansible, while automating CI/CD pipelines with Jenkins/GitLab CI. Optimized Kubernetes deployments with Helm, scaling, and service discovery, and implemented monitoring via Prometheus/Grafana and ELK. Collaborated with global teams to ensure 24/7 deployment readiness and infrastructure efficiency.</p>
+                </div>
             </div>
         </div>
     </section>
 
     <section id="skills" class="skills">
         <div class="container">
-            <h2>Skills & Expertise</h2>
+            <h2>Skills</h2>
             <div class="skills-grid">
                 <div class="skill-card">
                     <h3>Kubernetes & Cloud</h3>
@@ -477,7 +522,7 @@
         </div>
     </section>
 
-    <section id="skills" class="section">
+    <section id="tools" class="section">
         <div class="container">
             <h2 class="section-title">Tools</h2>
             <div class="skills-grid" id="skillsContainer">
@@ -515,7 +560,7 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2024 Oleg Zhemanov. All rights reserved.</p>
+            <p>&copy; 2025 Oleg Zhemanov.</p>
         </div>
     </footer>
 
@@ -526,9 +571,6 @@
             isScrolled: false,
             isMobileMenuOpen: false,
             isSubmitting: false,
-            about: {
-                summary: 'Experienced Site Reliability Engineer (SRE) with 3 years of expertise in building and managing scalable microservices using Kubernetes, and over 8 years in the IT industry. I specialized in creating efficient CI/CD pipelines, implementing autoscaling, and ensuring robust security. I was proficient in using service mesh tools, managing disaster recovery, and setting up monitoring, logging, and infrastructure as code (IaC). I managed storage, networking, and cloud infrastructure to deliver reliable, high-performance systems. My focus was on enhancing system reliability, scalability, and efficiency through automation and continuous improvement.',
-            },
             skills: [
                 {
                     title: 'Infrastructure and Cloud Tools',
@@ -582,20 +624,20 @@
             projects: [
                 { 
                     title: 'This Web site',
-                    description: 'Implemented automated deployment pipelines reducing deployment time from hours to minutes.',
+                    description: 'Deployment automation and infrastructure..',
                     image: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/cicd.jpg',
-                    technologies: ['Jenkins', 'Docker', 'Kubernetes', 'Helm'],
-                    github: 'https://github.com/your-username/project2',
-                    demo: 'https://demo2.example.com',
-                    github_front: 'https://demo2.example.com'
+                    technologies: ['AWS', 'Lambda', 'GitHub', 'Python'],
+                    github: 'https://github.com/OlegZhemanov/zhem',
+                    demo: './infrastructure.html',
+                    github_front: 'https://github.com/OlegZhemanov/myweb'
                 },
                 {
-                    title: 'Soon',
-                    description: 'Soon.',
+                    title: 'Soon.',
+                    description: 'There will be a new project here soon.',
                     image: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/cicd.jpg',
                     technologies: [],
-                    github: 'https://github.com/OlegZhemanov/zhem/tree/main/terra/gcp',
-                    demo: 'https://demo1.example.com'
+                    github: '',
+                    demo: ''
                 }
             ],
             formData: {
@@ -609,7 +651,7 @@
         function renderSkills() {
             const skillsContainer = document.getElementById('skillsContainer');
             skillsContainer.innerHTML = appData.skills.map(category => `
-                <div class="skill-category">
+                <div class="skill-card">
                     <h3 class="category-title">${category.title}</h3>
                     <div class="skills-container">
                         ${category.items.map(skill => `

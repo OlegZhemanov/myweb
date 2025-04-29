@@ -6,17 +6,32 @@ import { fileURLToPath } from 'node:url';
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 const server = createServer(async (req, res) => {
-    if (req.url === '/') {
-        try {
-            const html = await readFile(join(__dirname, 'public', 'index.html'), 'utf-8');
-            res.writeHead(200, { 'Content-Type': 'text/html' });
-            res.end(html);
-        } catch (error) {
-            console.error('Error loading page:', error);
-            res.writeHead(500);
-            res.end('Error loading page');
+    try {
+        // Remove query parameters and trailing slashes
+        let path = req.url.split('?')[0];
+        if (path.endsWith('/')) {
+            path = path.slice(0, -1);
         }
-    } else {
+
+        // Default to index.html for root path
+        if (path === '') {
+            path = '/index.html';
+        }
+
+        // Serve files from the public directory
+        const filePath = join(__dirname, 'public', path);
+        const fileContent = await readFile(filePath, 'utf-8');
+        
+        // Set appropriate content type based on file extension
+        const contentType = path.endsWith('.html') ? 'text/html' : 
+                          path.endsWith('.css') ? 'text/css' : 
+                          path.endsWith('.js') ? 'text/javascript' : 
+                          'text/plain';
+
+        res.writeHead(200, { 'Content-Type': contentType });
+        res.end(fileContent);
+    } catch (error) {
+        console.error('Error serving file:', error);
         res.writeHead(404);
         res.end('Not Found');
     }

@@ -1,0 +1,937 @@
+<template>
+  <div class="portfolio-container" :class="{ 'dark-mode': isDarkMode }">
+    <!-- Navigation Bar -->
+    <nav class="navbar" :class="{ 'navbar-scrolled': isScrolled }">
+      <div class="nav-content">
+        <div class="nav-brand">OZ</div>
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+          <button @click="toggleDarkMode" class="theme-toggle">
+            {{ isDarkMode ? '☀️' : '🌙' }}
+          </button>
+        </div>
+        <!-- Mobile Menu Button -->
+        <div class="mobile-menu-btn" @click="toggleMobileMenu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <!-- Mobile Menu -->
+      <div class="mobile-menu" :class="{ 'active': isMobileMenuOpen }">
+        <a href="#about" @click="closeMobileMenu">About</a>
+        <a href="#skills" @click="closeMobileMenu">Skills</a>
+        <a href="#projects" @click="closeMobileMenu">Projects</a>
+        <a href="#contact" @click="closeMobileMenu">Contact</a>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1>Oleg Zhemanov</h1>
+          <h2>DevOps Engineer</h2>
+          <p class="tagline">Building Scalable and Reliable Infrastructure</p>
+          <div class="hero-cta">
+            <a href="#contact" class="cta-button primary">Get in Touch</a>
+            <a href="#projects" class="cta-button secondary">View Projects</a>
+          </div>
+        </div>
+        <div class="hero-image">
+          <div class="profile-image-container">
+            <img src="https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/AWS_associate.png" alt="Oleg Zhemanov" class="profile-image">
+            <p>In progress</p>
+          </div>
+          <!-- <div class="profile-image-container">
+            <img src="https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/gcp.png" alt="Oleg Zhemanov" class="profile-image">
+            <p>In progress</p>
+          </div> -->
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+      <div class="section-content">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-grid">
+          <div class="about-text">
+            <p>{{ about.summary }}</p>
+            <div class="experience-highlights">
+              <div class="highlight-item" v-for="(highlight, index) in about.highlights" :key="index">
+                <span class="highlight-number">{{ highlight.number }}</span>
+                <span class="highlight-label">{{ highlight.label }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="about-image">
+            <img src="https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/script.jpg" alt="Working on DevOps" class="work-image">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section">
+      <div class="section-content">
+        <h2 class="section-title">Technical Skills</h2>
+        <div class="skills-grid">
+          <div v-for="category in skills" :key="category.title" class="skill-category">
+            <h3 class="category-title">{{ category.title }}</h3>
+            <div class="skills-container">
+              <div v-for="skill in category.items" :key="skill.name" class="skill-item">
+                <div class="skill-icon">
+                  <img :src="skill.icon" :alt="skill.name">
+                </div>
+                <div class="skill-info">
+                  <h4>{{ skill.name }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+      <div class="section-content">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="projects-grid">
+          <div v-for="project in projects" :key="project.title" class="project-card">
+            <div class="project-image">
+              <img :src="project.image" :alt="project.title">
+            </div>
+            <div class="project-content">
+              <h3>{{ project.title }}</h3>
+              <p>{{ project.description }}</p>
+              <div class="project-tech">
+                <span v-for="tech in project.technologies" 
+                      :key="tech" 
+                      class="tech-tag">
+                  {{ tech }}
+                </span>
+              </div>
+              <div class="project-links">
+                <a :href="project.github" target="_blank" rel="noopener noreferrer" class="project-link">
+                  <i class="fab fa-github"></i> View Code
+                </a>
+                <a :href="project.demo" target="_blank" rel="noopener noreferrer" class="project-link">
+                  <i class="fas fa-external-link-alt"></i> Live Demo
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+      <div class="section-content">
+        <h2 class="section-title">Get in Touch</h2>
+        <div class="contact-container">
+          <div class="contact-info">
+            <div class="info-item">
+              <i class="fas fa-envelope"></i>
+              <a href="mailto:ozhemanov@gmail.com">ozhemanov@gmail.com</a>
+            </div>
+            <div class="info-item">
+              <i class="fab fa-linkedin"></i>
+              <a href="https://www.linkedin.com/in/oleg-zhemanov/" target="_blank" rel="noopener noreferrer">
+                LinkedIn Profile
+              </a>
+            </div>
+            <div class="info-item">
+              <i class="fab fa-github"></i>
+              <a href="https://github.com/OlegZhemanov" target="_blank" rel="noopener noreferrer">
+                GitHub Profile
+              </a>
+            </div>
+          </div>
+          <form class="contact-form" @submit.prevent="handleSubmit">
+            <div class="form-group">
+              <label for="name">Name *</label>
+              <input 
+                type="text" 
+                id="name" 
+                v-model="formData.name" 
+                required
+                placeholder="Your name"
+              >
+            </div>
+            <div class="form-group">
+              <label for="email">Email *</label>
+              <input 
+                type="email" 
+                id="email" 
+                v-model="formData.email" 
+                required
+                placeholder="your.email@example.com"
+              >
+            </div>
+            <div class="form-group">
+              <label for="message">Message *</label>
+              <textarea 
+                id="message" 
+                v-model="formData.message" 
+                required
+                placeholder="Your message here..."
+                rows="5"
+              ></textarea>
+            </div>
+            <button 
+              type="submit" 
+              :disabled="!isFormValid || isSubmitting"
+              class="submit-button"
+            >
+              {{ isSubmitting ? 'Sending...' : 'Send Message' }}
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-text">
+          © {{ new Date().getFullYear() }} Oleg Zhemanov. All rights reserved.
+        </div>
+        <div class="footer-links">
+          <a href="#home">Back to Top</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Portfolio',
+  data() {
+    return {
+      isDarkMode: false,
+      isScrolled: false,
+      isMobileMenuOpen: false,
+      isSubmitting: false,
+      about: {
+        summary: 'Experienced Site Reliability Engineer (SRE) with 3 years of expertise in building and managing scalable microservices using Kubernetes, and over 8 years in the IT industry. I specialized in creating efficient CI/CD pipelines, implementing autoscaling, and ensuring robust security. I was proficient in using service mesh tools, managing disaster recovery, and setting up monitoring, logging, and infrastructure as code (IaC). I managed storage, networking, and cloud infrastructure to deliver reliable, high-performance systems. My focus was on enhancing system reliability, scalability, and efficiency through automation and continuous improvement.',
+      },
+      skills: [
+        {
+          title: 'Infrastructure and Cloud Tools',
+          items: [
+            { name: 'Docker', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/docker-svgrepo-com.svg' },
+            { name: 'Kubernetes', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/kubernetes-svgrepo-com.svg' },
+            { name: 'OpenShift', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/openshift-svgrepo-com.svg' },
+            { name: 'Helm', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/helm-svgrepo-com.svg' },
+            { name: 'Linux', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/linux-svgrepo-com.svg' },
+            { name: 'Terraform', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/terraform-svgrepo-com.svg' },
+            { name: 'AWS', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/aws-svgrepo-com.svg' },
+            { name: 'GCP', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/gcp-svgrepo-com.svg' },
+            { name: 'Nginx', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/nginx-svgrepo-com.svg' },
+            { name: 'istio', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/istio-icon-color.svg' },
+            { name: 'Windows server', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/windows-applications-svgrepo-com.svg' },
+          ]
+        },
+        {
+          title: 'DevOps and CI/CD Tools',
+          items: [
+            { name: 'Ansible', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/ansible-svgrepo-com.svg' },
+            { name: 'Jenkins', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/jenkins-svgrepo-com.svg' },
+            { name: 'Bitbucket', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/bitbucket-svgrepo-com.svg' },
+            { name: 'Git', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/git-svgrepo-com.svg' },
+            { name: 'Github', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/github-142-svgrepo-com.svg' },
+            { name: 'ArgoCD', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/Argo-CD.svg' },
+            { name: 'SonarQube', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/sonarqube-svgrepo-com.svg' },
+            { name: 'Nexus', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/sonatype-repository-icon.svg' },
+            { name: 'HashiCorp Vault', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/vault-svgrepo-com.svg' },
+            { name: 'Grafana', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/grafana-svgrepo-com.svg' },
+            { name: 'Prometheus', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/prometheus-svgrepo-com.svg' },
+          ]
+        },
+        {
+          title: 'Programming, Scripting, and Databases',
+          items: [
+            { name: 'Groovy', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/groovy-svgrepo-com.svg' },
+            { name: 'GO', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/go-svgrepo-com.svg' },
+            { name: 'Python', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/python-svgrepo-com.svg' },
+            { name: 'Java', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/java-svgrepo-com.svg' },
+            { name: 'Bash', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/bash-icon-svgrepo-com.svg' },
+            { name: 'PowerShell', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/powershell-svgrepo-com.svg' },
+            { name: 'PostgreSQL', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/postgresql-svgrepo-com.svg' },
+            { name: 'Redis', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/redis-svgrepo-com.svg' },
+            { name: 'MongoDB', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/mongodb-svgrepo-com.svg' },
+            { name: 'Kafka', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/kafka-svgrepo-com.svg' },
+            { name: 'Apache Ignite', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/apache-ignite.svg' }
+          ]
+        }
+      ],
+      projects: [
+        { 
+          title: 'This Web site',
+          description: 'Implemented automated deployment pipelines reducing deployment time from hours to minutes.',
+          image: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/cicd.jpg',
+          technologies: ['Jenkins', 'Docker', 'Kubernetes', 'Helm'],
+          github: 'https://github.com/your-username/project2',
+          demo: 'https://demo2.example.com',
+          github_front: 'https://demo2.example.com'
+        },
+        {
+          title: 'Soon',
+          description: 'Soon.',
+          image: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/cicd.jpg',
+          technologies: [],
+          github: 'https://github.com/OlegZhemanov/zhem/tree/main/terra/gcp',
+          demo: 'https://demo1.example.com'
+        }
+      ],
+      formData: {
+        name: '',
+        email: '',
+        message: ''
+      }
+    }
+  },
+  computed: {
+    isFormValid() {
+      return this.formData.name && 
+             this.formData.email && 
+             this.formData.message
+    }
+  },
+  methods: {
+    toggleDarkMode() {
+      this.isDarkMode = !this.isDarkMode
+      document.body.classList.toggle('dark-mode')
+    },
+    toggleMobileMenu() {
+      this.isMobileMenuOpen = !this.isMobileMenuOpen
+    },
+    closeMobileMenu() {
+      this.isMobileMenuOpen = false
+    },
+    handleScroll() {
+      this.isScrolled = window.scrollY > 50
+    },
+    async handleSubmit() {
+      if (!this.isFormValid) return;
+      
+      this.isSubmitting = true;
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(this.formData)
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        alert('Message sent successfully!');
+        this.formData = {
+          name: '',
+          email: '',
+          message: ''
+        };
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to send message. Please try again later.');
+      } finally {
+        this.isSubmitting = false;
+      }
+    }
+  },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll)
+  },
+  beforeUnmount() {
+    window.removeEventListener('scroll', this.handleScroll)
+  }
+}
+</script>
+
+<style scoped>
+/* Base Styles */
+:root {
+  --primary-color: #0a66c2;
+  --secondary-color: #16437E;
+  --accent-color: #00b4d8;
+  --background-color: #ffffff;
+  --surface-color: #f8f9fa;
+  --text-color: #2c3e50;
+  --text-light: #6c757d;
+  --border-color: #e9ecef;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode {
+  --primary-color: #76b869;
+  --secondary-color: #4abd32;
+  --accent-color: #00e5ff;
+  --background-color: #1a1a1a;
+  --surface-color: #2d2d2d;
+  --text-color: #ffffff;
+  --text-light: #a0a0a0;
+  --border-color: #404040;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  display: block;
+  margin: 0px;
+}
+
+.portfolio-container {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: all 0.3s ease;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Navigation */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: var(--background-color,  #dadada);
+  padding: 1rem 0;
+  transition: all 0.3s ease;
+}
+
+.navbar-scrolled {
+  box-shadow: 0 2px 10px var(--shadow-color);
+}
+
+.nav-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.nav-links a {
+  color: var(--text-color);
+  text-decoration: none;
+  margin-left: 2rem;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--primary-color);
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-left: 2rem;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.theme-toggle:hover {
+  background-color: var(--surface-color);
+}
+
+/* Hero Section */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 2rem 4rem;
+  background: linear-gradient(
+    135deg,
+    var(--background-color) 0%,
+    var(--surface-color) 100%
+  );
+}
+
+.hero-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-text h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.hero-text h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--secondary-color);
+}
+
+.tagline {
+  font-size: 1.2rem;
+  color: var(--text-light);
+  margin-bottom: 2rem;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 1rem;
+}
+
+.cta-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.cta-button.primary {
+  background-color: var(--primary-color,  #76b869);
+  color: white;
+}
+
+.cta-button.secondary {
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color,  #76b869);
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px var(--shadow-color);
+}
+
+.hero-image {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.profile-image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: calc(20% - 1.6rem); /* 20% for 5 items per row, accounting for gap */
+  min-width: 120px;
+  max-width: 180px;
+}
+
+.profile-image {
+  width: 100%;
+  height: auto;
+  border-radius: 1rem;
+  box-shadow: 0 8px 16px var(--shadow-color);
+}
+
+/* Sections */
+.section {
+  padding: 6rem 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.section-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 4rem;
+  color: var(--primary-color);
+}
+
+/* Skills Section */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 3rem;
+}
+
+.skill-category {
+  background-color: var(--surface-color, #eeeeee);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px var(--shadow-color);
+}
+
+.category-title {
+  margin-bottom: 2rem;
+  color: var(--primary-color);
+}
+
+.skill-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.skill-icon {
+  width: 40px;
+  height: 40px;
+  margin-left: 3rem;
+}
+
+.skill-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.skill-info {
+  flex: 0;
+  margin-left: 1rem; 
+}
+
+.skill-level {
+  height: 6px;
+  background-color: var(--border-color, #dadada);
+  border-radius: 3px;
+  margin-top: 0.5rem;
+}
+
+.level-bar {
+  height: 100%;
+  background-color: var(--primary-color, #76b869);
+  border-radius: 3px;
+  transition: width 1s ease-in-out;
+}
+
+/* Projects Section */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.project-card {
+  background-color: var(--surface-color, #eeeeee);
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 6px var(--shadow-color);
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+}
+
+.project-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.project-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.project-content {
+  padding: 2rem;
+}
+
+.project-content h3 {
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.tech-tag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  margin: 0.25rem;
+  background-color: var(--primary-color,  #76b869);
+  color: white;
+  border-radius: 1rem;
+  font-size: 0.9rem;
+}
+
+.project-links {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.project-link {
+  color: var(--primary-color,  #76b869);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Contact Section */
+.contact-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 3rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 4rem;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.info-item i {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+}
+
+.info-item a {
+  color: var(--text-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.info-item a:hover {
+  color: var(--primary-color);
+}
+
+.contact-form {
+  background-color: var(--surface-color, #ffffff);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px var(--shadow-color);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color,#eeeeee);
+  border-radius: 4px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.submit-button {
+  width: 100%;
+  padding: 1rem;
+  background-color: var(--primary-color, #76b869);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submit-button:hover:not(:disabled) {
+  background-color: var(--secondary-color, #4abd32);
+  transform: translateY(-2px);
+}
+
+.submit-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Footer */
+.footer {
+  background-color: var(--surface-color, #dadada);
+  padding: 2rem;
+  margin-top: 4rem;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-links a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+/* Mobile Menu */
+.mobile-menu-btn {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.mobile-menu-btn span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 70px;
+  left: 0;
+  right: 0;
+  background-color: var(--background-color);
+  padding: 1rem;
+  box-shadow: 0 2px 10px var(--shadow-color);
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+}
+
+.mobile-menu.active {
+  transform: translateY(0);
+}
+
+.mobile-menu a {
+  display: block;
+  padding: 1rem;
+  color: var(--text-color);
+  text-decoration: none;
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+.mobile-menu a:hover {
+  color: var(--primary-color);
+}
+
+.about-image {
+  margin-top: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .profile-image-container {
+    width: calc(25% - 1.6rem); /* 4 items per row */
+  }
+}
+
+@media (max-width: 992px) {
+  .profile-image-container {
+    width: calc(33.333% - 1.6rem); /* 3 items per row */
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  .mobile-menu {
+    display: block;
+  }
+
+  .section {
+    padding: 4rem 1rem;
+  }
+
+  .hero-text h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-text h2 {
+    font-size: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .skills-grid,
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .hero-image {
+    gap: 1rem;
+  }
+
+  .profile-image-container {
+    width: calc(50% - 1rem); /* 2 items per row */
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-image-container {
+    width: 100%; /* 1 item per row */
+    max-width: 200px;
+  }
+}
+
+/* Update the work-image styles in the <style> section */
+.work-image {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  border-radius: 1rem;
+  box-shadow: 0 8px 16px var(--shadow-color);
+  margin: 0 auto;
+  display: block;
+}
+</style> 

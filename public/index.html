@@ -1,17 +1,717 @@
 <!DOCTYPE html>
-<html lang="">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
-</html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oleg Zhemanov - SRE Portfolio</title>
+    <style>
+        :root {
+            --primary-color: #76b869;
+            --secondary-color: #4abd32;
+            --accent-color: #00b4d8;
+            --background-color: #ffffff;
+            --surface-color: #f8f9fa;
+            --text-color: #2c3e50;
+            --text-light: #6c757d;
+            --border-color: #e9ecef;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode {
+            --primary-color: #76b869;
+            --secondary-color: #4abd32;
+            --accent-color: #00e5ff;
+            --background-color: #1a1a1a;
+            --surface-color: #2d2d2d;
+            --text-color: #ffffff;
+            --text-light: #a0a0a0;
+            --border-color: #404040;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            transition: all 0.3s ease;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        header {
+            background-color: var(--background-color);
+            box-shadow: 0 2px 4px var(--shadow-color);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--surface-color);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            background-color: var(--background-color);
+            padding: 1rem;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            transform: translateY(0);
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 1rem;
+            color: var(--text-color);
+            text-decoration: none;
+            text-align: center;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--primary-color);
+        }
+        
+        .hero {
+            padding: 8rem 0;
+            background: linear-gradient(135deg, var(--background-color) 0%, var(--surface-color) 100%);
+            margin-top: 4rem;
+        }
+        
+        .hero-content {
+            max-width: 600px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            color: var(--text-color);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.375rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+        
+        section {
+            padding: 4rem 0;
+        }
+        
+        .skills {
+            background-color: var(--background-color);
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .skill-category {
+            background-color: var(--surface-color);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px var(--shadow-color);
+            transition: transform 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+        }
+        
+        .category-title {
+            font-size: 1.25rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem;
+            background-color: var(--background-color);
+            border-radius: 0.375rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill-item:hover {
+            background-color: var(--surface-color);
+            transform: translateX(5px);
+        }
+
+        .skill-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .skill-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .skill-info h4 {
+            font-size: 0.875rem;
+            margin: 0;
+            color: var(--text-color);
+        }
+
+        .contact-form {
+            background-color: var(--surface-color);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--surface-color);
+            color: var(--text-color);
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        @media (max-width: 1024px) {
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero {
+                padding: 6rem 0;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .skills-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background-color: var(--surface-color);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px var(--shadow-color);
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-content p {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+
+        .project-technologies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tech-tag {
+            background-color: var(--background-color);
+            color: var(--primary-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .project-link:hover {
+            color: var(--secondary-color);
+        }
+
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">OZ</div>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#contact">Contact</a>
+                <button class="theme-toggle" onclick="toggleDarkMode()">🌙</button>
+            </div>
+            <div class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#about" onclick="closeMobileMenu()">About</a>
+            <a href="#skills" onclick="closeMobileMenu()">Skills</a>
+            <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Oleg Zhemanov</h1>
+                <p>Site Reliability Engineer with 3 years of expertise in building and managing scalable microservices using Kubernetes, and over 8 years in the IT industry.</p>
+                <a href="#contact" class="btn">Get in Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2>Skills & Expertise</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>Kubernetes & Cloud</h3>
+                    <p>Expertise in container orchestration, cloud infrastructure, and microservices architecture.</p>
+                </div>
+                <div class="skill-card">
+                    <h3>CI/CD & Automation</h3>
+                    <p>Building robust CI/CD pipelines and implementing automation solutions.</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Monitoring & Observability</h3>
+                    <p>Implementing comprehensive monitoring and observability solutions.</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Security & Compliance</h3>
+                    <p>Ensuring robust security practices and compliance with industry standards.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="section">
+        <div class="container">
+            <h2 class="section-title">Tools</h2>
+            <div class="skills-grid" id="skillsContainer">
+                <!-- Skills will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section">
+        <div class="container">
+            <h2 class="section-title">Projects</h2>
+            <div class="projects-grid" id="projectsContainer">
+                <!-- Projects will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Get in Touch</h2>
+            <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                    <input type="text" id="name" name="name" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" name="email" placeholder="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+                </div>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Oleg Zhemanov. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Data object
+        const appData = {
+            isDarkMode: false,
+            isScrolled: false,
+            isMobileMenuOpen: false,
+            isSubmitting: false,
+            about: {
+                summary: 'Experienced Site Reliability Engineer (SRE) with 3 years of expertise in building and managing scalable microservices using Kubernetes, and over 8 years in the IT industry. I specialized in creating efficient CI/CD pipelines, implementing autoscaling, and ensuring robust security. I was proficient in using service mesh tools, managing disaster recovery, and setting up monitoring, logging, and infrastructure as code (IaC). I managed storage, networking, and cloud infrastructure to deliver reliable, high-performance systems. My focus was on enhancing system reliability, scalability, and efficiency through automation and continuous improvement.',
+            },
+            skills: [
+                {
+                    title: 'Infrastructure and Cloud Tools',
+                    items: [
+                        { name: 'Docker', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/docker-svgrepo-com.svg' },
+                        { name: 'Kubernetes', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/kubernetes-svgrepo-com.svg' },
+                        { name: 'OpenShift', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/openshift-svgrepo-com.svg' },
+                        { name: 'Helm', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/helm-svgrepo-com.svg' },
+                        { name: 'Linux', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/linux-svgrepo-com.svg' },
+                        { name: 'Terraform', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/terraform-svgrepo-com.svg' },
+                        { name: 'AWS', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/aws-svgrepo-com.svg' },
+                        { name: 'GCP', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/gcp-svgrepo-com.svg' },
+                        { name: 'Nginx', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/nginx-svgrepo-com.svg' },
+                        { name: 'istio', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/istio-icon-color.svg' },
+                        { name: 'Windows server', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/windows-applications-svgrepo-com.svg' },
+                    ]
+                },
+                {
+                    title: 'DevOps and CI/CD Tools',
+                    items: [
+                        { name: 'Ansible', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/ansible-svgrepo-com.svg' },
+                        { name: 'Jenkins', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/jenkins-svgrepo-com.svg' },
+                        { name: 'Bitbucket', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/bitbucket-svgrepo-com.svg' },
+                        { name: 'Git', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/git-svgrepo-com.svg' },
+                        { name: 'Github', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/github-142-svgrepo-com.svg' },
+                        { name: 'ArgoCD', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/Argo-CD.svg' },
+                        { name: 'SonarQube', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/sonarqube-svgrepo-com.svg' },
+                        { name: 'Nexus', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/sonatype-repository-icon.svg' },
+                        { name: 'HashiCorp Vault', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/vault-svgrepo-com.svg' },
+                        { name: 'Grafana', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/grafana-svgrepo-com.svg' },
+                        { name: 'Prometheus', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/prometheus-svgrepo-com.svg' },
+                    ]
+                },
+                {
+                    title: 'Programming, Scripting, and Databases',
+                    items: [
+                        { name: 'Groovy', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/groovy-svgrepo-com.svg' },
+                        { name: 'GO', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/go-svgrepo-com.svg' },
+                        { name: 'Python', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/python-svgrepo-com.svg' },
+                        { name: 'Java', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/java-svgrepo-com.svg' },
+                        { name: 'Bash', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/bash-icon-svgrepo-com.svg' },
+                        { name: 'PowerShell', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/powershell-svgrepo-com.svg' },
+                        { name: 'PostgreSQL', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/postgresql-svgrepo-com.svg' },
+                        { name: 'Redis', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/redis-svgrepo-com.svg' },
+                        { name: 'MongoDB', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/mongodb-svgrepo-com.svg' },
+                        { name: 'Kafka', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/kafka-svgrepo-com.svg' },
+                        { name: 'Apache Ignite', icon: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/apache-ignite.svg' }
+                    ]
+                }
+            ],
+            projects: [
+                { 
+                    title: 'This Web site',
+                    description: 'Implemented automated deployment pipelines reducing deployment time from hours to minutes.',
+                    image: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/cicd.jpg',
+                    technologies: ['Jenkins', 'Docker', 'Kubernetes', 'Helm'],
+                    github: 'https://github.com/your-username/project2',
+                    demo: 'https://demo2.example.com',
+                    github_front: 'https://demo2.example.com'
+                },
+                {
+                    title: 'Soon',
+                    description: 'Soon.',
+                    image: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/cicd.jpg',
+                    technologies: [],
+                    github: 'https://github.com/OlegZhemanov/zhem/tree/main/terra/gcp',
+                    demo: 'https://demo1.example.com'
+                }
+            ],
+            formData: {
+                name: '',
+                email: '',
+                message: ''
+            }
+        };
+
+        // Function to render skills
+        function renderSkills() {
+            const skillsContainer = document.getElementById('skillsContainer');
+            skillsContainer.innerHTML = appData.skills.map(category => `
+                <div class="skill-category">
+                    <h3 class="category-title">${category.title}</h3>
+                    <div class="skills-container">
+                        ${category.items.map(skill => `
+                            <div class="skill-item">
+                                <div class="skill-icon">
+                                    <img src="${skill.icon}" alt="${skill.name}">
+                                </div>
+                                <div class="skill-info">
+                                    <h4>${skill.name}</h4>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Dark mode toggle
+        function toggleDarkMode() {
+            appData.isDarkMode = !appData.isDarkMode;
+            document.body.classList.toggle('dark-mode');
+            const themeToggle = document.querySelector('.theme-toggle');
+            themeToggle.textContent = appData.isDarkMode ? '☀️' : '🌙';
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            appData.isMobileMenuOpen = !appData.isMobileMenuOpen;
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('active');
+        }
+
+        function closeMobileMenu() {
+            appData.isMobileMenuOpen = false;
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.remove('active');
+        }
+
+        // Contact form handler
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                message: document.getElementById('message').value
+            };
+            
+            try {
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                if (response.ok) {
+                    alert('Message sent successfully!');
+                    document.getElementById('contactForm').reset();
+                } else {
+                    throw new Error('Failed to send message');
+                }
+            } catch (error) {
+                alert('Error sending message. Please try again.');
+                console.error('Error:', error);
+            }
+        });
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            renderSkills();
+            displayProjects();
+        });
+
+        function displayProjects() {
+            const projectsContainer = document.getElementById('projectsContainer');
+            projectsContainer.innerHTML = '';
+
+            appData.projects.forEach(project => {
+                const projectCard = document.createElement('div');
+                projectCard.className = 'project-card';
+                projectCard.innerHTML = `
+                    <div class="project-image">
+                        <img src="${project.image}" alt="${project.title}">
+                    </div>
+                    <div class="project-content">
+                        <h3>${project.title}</h3>
+                        <p>${project.description}</p>
+                        <div class="project-technologies">
+                            ${project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                        </div>
+                        <div class="project-links">
+                            ${project.github ? `<a href="${project.github}" target="_blank" class="project-link">GitHub</a>` : ''}
+                            ${project.github_front ? `<a href="${project.github_front}" target="_blank" class="project-link">Frontend</a>` : ''}
+                            ${project.demo ? `<a href="${project.demo}" target="_blank" class="project-link">Demo</a>` : ''}
+                        </div>
+                    </div>
+                `;
+                projectsContainer.appendChild(projectCard);
+            });
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,12 @@
+{
+    "FunctionName": "about-me-page",
+    "Runtime": "nodejs22.x",
+    "Handler": "lambda.handler",
+    "MemorySize": 128,
+    "Timeout": 10,
+    "Environment": {
+        "Variables": {
+            "NODE_ENV": "production"
+        }
+    }
+} 

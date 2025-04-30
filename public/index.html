@@ -7,7 +7,7 @@
     <style>
         :root {
             --primary-color: #76b869;
-            --secondary-color: #4abd32;
+            --secondary-color: #006A46;
             --accent-color: #00b4d8;
             --background-color: #ffffff;
             --surface-color: #f8f9fa;
@@ -19,7 +19,7 @@
 
         .dark-mode {
             --primary-color: #76b869;
-            --secondary-color: #4abd32;
+            --secondary-color: #006A46;
             --accent-color: #00e5ff;
             --background-color: #1a1a1a;
             --surface-color: #2d2d2d;
@@ -425,6 +425,13 @@
             color: var(--secondary-color);
         }
 
+        a.exp-link {
+        color: var(--primary-color);
+        }
+        a.exp-link:hover {
+        color: var(--secondary-color);;
+        }
+
         @media (max-width: 768px) {
             .projects-grid {
                 grid-template-columns: 1fr;
@@ -485,14 +492,22 @@
             <h2>Expertise</h2>
             <div class="skills-grid">
                 <div class="skill-card">
-                    <h3>SberBank</h3>
+                    <h3><a href="https://www.sberbank.com" target="_blank" rel="noopener noreferrer" class="exp-link" >SberBank</a></h3>
+                    <h4>DevOps Engineer</h4>
                     <p class="job-dates">May 2023 - October 2024</p>
                     <p>Ensured high availability (99.9999% SLA) for 150+ anti-fraud applications, managing 200+ annual releases. Automated infrastructure on SberCloud using Terraform, Ansible, and Kubernetes, with standardized Helm charts for consistent deployments. Enhanced security with HashiCorp Vault and Istio, while streamlining CI/CD pipelines via Jenkins for efficient releases.</p>
                 </div>
                 <div class="skill-card">
-                    <h3>ZUZEX</h3>
+                    <h3><a href="https://www.zuzex.com/" target="_blank" rel="noopener noreferrer" class="exp-link" >ZUZEX</a></h3>
+                    <h4>DevOps Engineer</h4>
                     <p class="job-dates">March 2022 - March 2023</p>
                     <p>Managed AWS cloud services and bare-metal Kubernetes clusters using Terraform and Ansible, while automating CI/CD pipelines with Jenkins/GitLab CI. Optimized Kubernetes deployments with Helm, scaling, and service discovery, and implemented monitoring via Prometheus/Grafana and ELK. Collaborated with global teams to ensure 24/7 deployment readiness and infrastructure efficiency.</p>
+                </div>
+                <div class="skill-card">
+                    <h3>HORIZONT</h3>
+                    <h4>Infrastructure Engineer</h4>
+                    <p class="job-dates">Jule 2016 - March 2023</p>
+                    <p>Automated IT operations using Bash, PowerShell, and Ansible, while managing PostgreSQL databases and Nginx web servers with load balancing and SSL. Enhanced security through firewalls, intrusion detection, and access controls, and maintained detailed infrastructure documentation for seamless support.</p>
                 </div>
             </div>
         </div>
@@ -517,6 +532,14 @@
                 <div class="skill-card">
                     <h3>Security & Compliance</h3>
                     <p>Ensuring robust security practices and compliance with industry standards.</p>
+                </div>
+                <div class="skill-card"> 
+                    <h3>Infrastructure as Code (IaC)</h3> 
+                    <p>Designing and managing infrastructure using Terraform and Ansible for scalable and repeatable deployments.</p> 
+                </div> 
+                <div class="skill-card"> 
+                    <h3>Database & Middleware</h3> 
+                    <p>Managing PostgreSQL, Redis, Kafka, and other data systems with a focus on performance and reliability.</p> 
                 </div>
             </div>
         </div>
@@ -626,7 +649,7 @@
                     title: 'This Web site',
                     description: 'Deployment automation and infrastructure..',
                     image: 'https://s3.ca-central-1.amazonaws.com/oleg.zhemanov/cicd.jpg',
-                    technologies: ['AWS', 'Lambda', 'GitHub', 'Python'],
+                    technologies: ['AWS', 'Lambda', 'GitHub', 'Node.Js'],
                     github: 'https://github.com/OlegZhemanov/zhem',
                     demo: './infrastructure.html',
                     github_front: 'https://github.com/OlegZhemanov/myweb'

@@ -7,7 +7,7 @@
     "scripts": {
       "start": "node index.mjs",
       "dev": "node --watch index.mjs",
-      "deploy": "rm -f function.zip && zip -r function.zip lambda.mjs package.json lambda-config.json public -x '*.git*' 'node_modules/*'"
+      "deploy": "python3 dist.py"
     },
     "engines": {
       "node": ">=22.0.0"

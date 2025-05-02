@@ -1,0 +1,21 @@
+name: deploy-my-web-page
+
+on: 
+  push:
+    branches: 
+      - feature/BusinessCard
+
+jobs:
+  build-zip:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone repo
+        uses: actions/checkout@v1
+      - name: ls -la
+        run: ls -la
+      - name: npm run deploy
+        run: npm run deploy
+      - name: ls -la
+        run: ls -la
+      
+    

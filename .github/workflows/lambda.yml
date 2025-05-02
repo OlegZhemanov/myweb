@@ -1,5 +1,9 @@
 name: deploy-my-web-page
 
+env:
+  S3_BUKET_NAME: ozs-storage
+  REGION: ca-central-1
+
 on: 
   push:
     branches: 
@@ -11,8 +15,6 @@ jobs:
     steps:
       - name: Git clone repo
         uses: actions/checkout@v1
-      - name: ls -la
-        run: ls -la
       - name: npm run deploy
         run: npm run deploy
       - name: ls -la

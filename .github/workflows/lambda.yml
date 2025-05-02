@@ -27,6 +27,8 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           aws-region: ${{ env.REGION }}
+      - name: S3 list
+        run: aws s3 ls
       - name: Copy zip to S3
         run: aws s3 cp *.zip s3://${{ env.S3_BUKET_NAME }}/myWeb
       - name: Finish CI

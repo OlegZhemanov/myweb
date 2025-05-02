@@ -17,6 +17,12 @@ const server = createServer(async (req, res) => {
         if (path === '') {
             path = '/index.html';
         }
+        if (path === '/prod/web_main') {
+            path = '/index.html';
+        }
+        if (path === '/prod/web_first_project') {
+            path = '/infrastructure.html';
+        }
 
         // Serve files from the public directory
         const filePath = join(__dirname, 'public', path);

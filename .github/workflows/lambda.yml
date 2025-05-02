@@ -33,5 +33,7 @@ jobs:
         run: aws s3 cp ./ s3://${{ env.S3_BUKET_NAME }}/ --recursive  --exclude "*" --include "*.zip"
       - name: Finish CI
         run: echo "Finish CI!"
+      - name: repo name
+        run: echo "${{ github.action_repository }}"
       
     

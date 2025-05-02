@@ -19,5 +19,15 @@ jobs:
         run: npm run deploy
       - name: ls -la
         run: ls -la
+      - name: Configure AWS
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secret.AWS_SECRET_KEY }}
+          aws-region: ${{ env.REGION }}
+      - name: Copy zip to S3
+        run: aws s3 cp *.zip s3://${{ env.S3_BUKET_NAME }}/myWeb
+      - name: Finish CI
+        run: echo "Finish CI"
       
     

@@ -3,6 +3,7 @@ name: deploy-my-web-page
 env:
   S3_BUKET_NAME: ozs-storage
   REGION: ca-central-1
+  REPO_NAME: ${{ github.event.repository.name }}
 
 on: 
   push:
@@ -34,6 +35,6 @@ jobs:
       - name: Finish CI
         run: echo "Finish CI!"
       - name: repo name
-        run: echo "${{ env.github.action_repository }}"
+        run: echo "${{ env.REPO_NAME }}"
       
     

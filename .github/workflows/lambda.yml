@@ -30,7 +30,7 @@ jobs:
       - name: S3 list
         run: aws s3 ls
       - name: Copy zip to S3
-        run: aws s3 cp *.zip s3://${{ env.S3_BUKET_NAME }}/myWeb
+        run: aws s3 cp *.zip s3://${{ env.S3_BUKET_NAME }}/${{ github.action_repository }}/
       - name: Finish CI
         run: echo "Finish CI!"
       

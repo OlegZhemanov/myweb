@@ -19,6 +19,8 @@ jobs:
         run: npm run deploy
       - name: ls -la
         run: ls -la
+      - name: aws version
+        run: aws --version
       - name: Configure AWS
         uses: aws-actions/configure-aws-credentials@v1
         with:

@@ -4,6 +4,7 @@ env:
   S3_BUKET_NAME: ozs-storage
   REGION: ca-central-1
   REPO_NAME: ${{ github.event.repository.name }}
+  ENVIROMENT: dev
 
 on: 
   push:
@@ -31,10 +32,8 @@ jobs:
       - name: S3 list
         run: aws s3 ls
       - name: Copy zip to S3
-        run: aws s3 cp ./ s3://${{ env.S3_BUKET_NAME }}/ --recursive  --exclude "*" --include "*.zip"
+        run: aws s3 cp ./ s3://${{ env.S3_BUKET_NAME }}/${{ env.ENVIROMENT }}/${{ env.REPO_NAME }} --recursive  --exclude "*" --include "*.zip"
       - name: Finish CI
         run: echo "Finish CI!"
-      - name: repo name
-        run: echo "${{ env.REPO_NAME }}"
       
     

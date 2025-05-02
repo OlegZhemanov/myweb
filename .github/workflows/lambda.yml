@@ -34,6 +34,6 @@ jobs:
       - name: Finish CI
         run: echo "Finish CI!"
       - name: repo name
-        run: echo "${{ github.action_repository }}"
+        run: echo "${{ env.github.action_repository }}"
       
     

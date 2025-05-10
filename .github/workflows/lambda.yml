@@ -4,7 +4,7 @@ env:
   S3_BUKET_NAME: ozs-storage
   REGION: ca-central-1
   REPO_NAME: ${{ github.event.repository.name }}
-  ENVIROMENT: dev
+  ENVIROMENT: my
 
 on: 
   push:

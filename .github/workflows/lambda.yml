@@ -45,6 +45,8 @@ jobs:
         run: aws lambda update-function-code --region ${{ env.REGION }} --function-name first_project --s3-bucket ${{ env.S3_BUKET_NAME }} --s3-key ${{ env.ENVIROMENT }}/${{ env.REPO_NAME }}/first_project.zip
       - name: Deploy sender_to_sns
         run: aws lambda update-function-code --region ${{ env.REGION }} --function-name sender_to_sns --s3-bucket ${{ env.S3_BUKET_NAME }} --s3-key ${{ env.ENVIROMENT }}/${{ env.REPO_NAME }}/sender_to_sns.zip
+      - name: Finish CD
+        run: echo "Finish CD!"
 
 #TODO
 #sonarqube

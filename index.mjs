@@ -17,7 +17,7 @@ const server = createServer(async (req, res) => {
         if (path === '') {
             path = '/main_page.html';
         }
-        if (path === '/my/web_main') {
+        if (path === '/my/main_page') {
             path = '/main_page.html';
         }
         if (path === '/my/first_project') {

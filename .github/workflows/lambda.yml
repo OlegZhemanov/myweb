@@ -40,11 +40,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           aws-region: ${{ env.REGION }}
       - name: Deploy main_page
-        run: aws lambda update-function-code --region ${{ env.REGION }} --function-name main_page --s3-bucket ${{ env.S3_BUKET_NAME }} --s3-key /${{ env.ENVIROMENT }}/${{ env.REPO_NAME }}/main_page.zip
+        run: aws lambda update-function-code --region ${{ env.REGION }} --function-name main_page --s3-bucket ${{ env.S3_BUKET_NAME }} --s3-key ${{ env.ENVIROMENT }}/${{ env.REPO_NAME }}/main_page.zip
       - name: Deploy first_project
-        run: aws lambda update-function-code --region ${{ env.REGION }} --function-name first_project --s3-bucket ${{ env.S3_BUKET_NAME }} --s3-key /${{ env.ENVIROMENT }}/${{ env.REPO_NAME }}/first_project.zip
+        run: aws lambda update-function-code --region ${{ env.REGION }} --function-name first_project --s3-bucket ${{ env.S3_BUKET_NAME }} --s3-key ${{ env.ENVIROMENT }}/${{ env.REPO_NAME }}/first_project.zip
       - name: Deploy sender_to_sns
-        run: aws lambda update-function-code --region ${{ env.REGION }} --function-name sender_to_sns --s3-bucket ${{ env.S3_BUKET_NAME }} --s3-key /${{ env.ENVIROMENT }}/${{ env.REPO_NAME }}/sender_to_sns.zip
+        run: aws lambda update-function-code --region ${{ env.REGION }} --function-name sender_to_sns --s3-bucket ${{ env.S3_BUKET_NAME }} --s3-key ${{ env.ENVIROMENT }}/${{ env.REPO_NAME }}/sender_to_sns.zip
 
 #TODO
 #sonarqube

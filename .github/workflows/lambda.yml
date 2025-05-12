@@ -29,6 +29,12 @@ jobs:
         run: aws s3 cp ./ s3://${{ env.S3_BUKET_NAME }}/${{ env.ENVIROMENT }}/${{ env.REPO_NAME }} --recursive  --exclude "*" --include "*.zip"
       - name: Finish CI
         run: echo "Finish CI!"
+  Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy main_page
+        run: ll -la
+      
 #TODO
 #sonarqube
 #build Docker image

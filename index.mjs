@@ -15,13 +15,13 @@ const server = createServer(async (req, res) => {
 
         // Default to index.html for root path
         if (path === '') {
-            path = '/index.html';
+            path = '/main_page.html';
         }
-        if (path === '/prod/web_main') {
-            path = '/index.html';
+        if (path === '/my/web_main') {
+            path = '/main_page.html';
         }
-        if (path === '/prod/web_first_project') {
-            path = '/infrastructure.html';
+        if (path === '/my/first_project') {
+            path = '/first_project.html';
         }
 
         // Serve files from the public directory
